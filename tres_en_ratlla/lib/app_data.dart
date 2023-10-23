@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
@@ -10,12 +11,13 @@ class AppData with ChangeNotifier {
   List<List<String>> board = [];
   bool gameIsOver = false;
   String gameWinner = '-';
-
+  int minas = 5;
+  int width = 9;
   ui.Image? imagePlayer;
   ui.Image? imageOpponent;
   bool imagesReady = false;
 
-  void resetGame() {
+  void resetGame(int minas, int width) {
     board = [
       ['-', '-', '-', '-', '-', '-', '-', '-', '-'],
       ['-', '-', '-', '-', '-', '-', '-', '-', '-'],
@@ -27,6 +29,11 @@ class AppData with ChangeNotifier {
       ['-', '-', '-', '-', '-', '-', '-', '-', '-'],
       ['-', '-', '-', '-', '-', '-', '-', '-', '-'],
     ];
+    for (int cnt = 0; cnt < minas; cnt++) {
+      int columna = Random().nextInt(width) as int;
+      int row = Random().nextInt(width) as int;
+      board[row][columna] = "*";
+    }
     gameIsOver = false;
     gameWinner = '-';
   }
@@ -41,29 +48,7 @@ class AppData with ChangeNotifier {
       });
 
       checkGameWinner();
-      if (gameWinner == '-') {
-        machinePlay();
-      }
     }
-  }
-
-  // Fa una jugada de la màquina, només busca la primera posició lliure
-  void machinePlay() {
-    bool moveMade = false;
-
-    // Buscar una casella lliure '-'
-    for (int i = 0; i < 9; i++) {
-      for (int j = 0; j < 9; j++) {
-        if (board[i][j] == '-') {
-          board[i][j] = 'O';
-          moveMade = true;
-          break;
-        }
-      }
-      if (moveMade) break;
-    }
-
-    checkGameWinner();
   }
 
   // Comprova si el joc ja té un tres en ratlla
