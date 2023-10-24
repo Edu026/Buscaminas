@@ -92,8 +92,8 @@ class WidgetTresRatllaPainter extends CustomPainter {
   // Dibuixa el taulell de joc (creus i rodones)
   void drawBoardStatus(Canvas canvas, Size size) {
     // Dibuixar 'X' i 'O' del tauler
-    double cellWidth = size.width / 9;
-    double cellHeight = size.height / 9;
+    double cellWidth = size.width / int.parse(appData.taulell);
+    double cellHeight = size.height / int.parse(appData.taulell);
 
     for (int i = 0; i < int.parse(appData.taulell); i++) {
       for (int j = 0; j < int.parse(appData.taulell); j++) {

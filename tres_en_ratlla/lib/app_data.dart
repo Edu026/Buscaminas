@@ -7,8 +7,8 @@ class AppData with ChangeNotifier {
   // App status
   String taulell = "9";
   String mines = "5";
-
   List<List<String>> board = [];
+
   bool gameIsOver = false;
   String gameWinner = '-';
   int minas = 5;
@@ -18,28 +18,19 @@ class AppData with ChangeNotifier {
   bool imagesReady = false;
 
   void resetGame(int minas, int width) {
-    for (int x = 0; x < width - 1; x++) {
-      board.add([]);
-      for (int y = 0; y < width - 1; y++) {
-        board[x][y] = '-';
+    board = [];
+    for (int x = 0; x < width; x++) {
+      List<String> row = [];
+      for (int y = 0; y < width; y++) {
+        row.add('-');
       }
+      board.add(row);
     }
-    print(board);
-    board = [
-      ['-', '-', '-', '-', '-', '-', '-', '-', '-'],
-      ['-', '-', '-', '-', '-', '-', '-', '-', '-'],
-      ['-', '-', '-', '-', '-', '-', '-', '-', '-'],
-      ['-', '-', '-', '-', '-', '-', '-', '-', '-'],
-      ['-', '-', '-', '-', '-', '-', '-', '-', '-'],
-      ['-', '-', '-', '-', '-', '-', '-', '-', '-'],
-      ['-', '-', '-', '-', '-', '-', '-', '-', '-'],
-      ['-', '-', '-', '-', '-', '-', '-', '-', '-'],
-      ['-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ];
+
     for (int cnt = 0; cnt < minas; cnt++) {
       int columna = Random().nextInt(width) as int;
       int row = Random().nextInt(width) as int;
-      board[row][columna] = "*";
+      board[row][columna] = "M";
     }
 
     gameIsOver = false;
