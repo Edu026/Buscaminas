@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:provider/provider.dart';
 import 'app_data.dart';
 import 'widget_tresratlla_painter.dart';
@@ -28,6 +29,17 @@ class WidgetTresRatllaState extends State<WidgetTresRatlla> {
     AppData appData = Provider.of<AppData>(context);
 
     return GestureDetector(
+        onDoubleTapDown: (details) {
+        final int row = (details.localPosition.dy /
+                (context.size!.height / int.parse(appData.taulell)))
+            .floor();
+        final int col = (details.localPosition.dx /
+                (context.size!.width / int.parse(appData.taulell)))
+            .floor();
+
+        appData.flagCreation(row, col);
+        setState(() {}); // Actualitza la vista
+      },
       onTapUp: (TapUpDetails details) {
         final int row = (details.localPosition.dy /
                 (context.size!.height / int.parse(appData.taulell)))

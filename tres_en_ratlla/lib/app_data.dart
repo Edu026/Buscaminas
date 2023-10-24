@@ -62,6 +62,7 @@ class AppData with ChangeNotifier {
     }
   }
 
+
   // Comprova si el joc ja té un tres en ratlla
   // No comprova la situació d'empat
   void checkGameWinner() {
