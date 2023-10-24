@@ -35,8 +35,20 @@ class AppData with ChangeNotifier {
 
     gameIsOver = false;
     gameWinner = '-';
+
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < width; y++) {
+        if (board[x][y].compareTo("M") != 0) {
+          exploreAndMark(x, y);
+        }
+      }
+    }
+    board.forEach((n) {
+        print(n);
+      });
   }
 
+  
   // Fa una jugada, primer el jugador després la maquina
   void playMove(int row, int col) {
     if (board[row][col] == '-') {
@@ -133,4 +145,46 @@ class AppData with ChangeNotifier {
         );
     return completer.future;
   }
+  void exploreAndMark(int row, int col) {
+  // Verificar si estamos dentro de los límites del tablero
+  if (row < 0 || row >= width || col < 0 || col >= width) {
+    return;
+  }
+
+  // Verificar si ya hemos explorado esta casilla o si es una mina
+  if (board[row][col] != '-') {
+    return;
+  }
+
+  // Contar minas adyacentes
+  int minesAround = 0;
+
+  for (int dr = -1; dr <= 1; dr++) {
+    for (int dc = -1; dc <= 1; dc++) {
+      int newRow = row + dr;
+      int newCol = col + dc;
+
+      if (newRow >= 0 && newRow < width && newCol >= 0 && newCol < width) {
+        if (board[newRow][newCol] == 'M') {
+          minesAround++;
+        }
+      }
+    }
+  }
+
+  // Marcar la casilla con el número de minas adyacentes
+  board[row][col] = minesAround.toString();
+
+  // Si no hay minas adyacentes, explorar las casillas adyacentes
+  if (minesAround == 0) {
+    for (int dr = -1; dr <= 1; dr++) {
+      for (int dc = -1; dc <= 1; dc++) {
+        int newRow = row + dr;
+        int newCol = col + dc;
+        exploreAndMark(newRow, newCol);
+      }
+    }
+  }
+}
+
 }
