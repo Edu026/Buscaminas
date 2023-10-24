@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 class AppData with ChangeNotifier {
   // App status
-  String colorPlayer = "Verd";
-  String colorOpponent = "Taronja";
+  String taulell = "9";
+  String mines = "5";
 
   List<List<String>> board = [];
   bool gameIsOver = false;
@@ -18,6 +18,13 @@ class AppData with ChangeNotifier {
   bool imagesReady = false;
 
   void resetGame(int minas, int width) {
+    for (int x = 0; x < width - 1; x++) {
+      board.add([]);
+      for (int y = 0; y < width - 1; y++) {
+        board[x][y] = '-';
+      }
+    }
+    print(board);
     board = [
       ['-', '-', '-', '-', '-', '-', '-', '-', '-'],
       ['-', '-', '-', '-', '-', '-', '-', '-', '-'],
@@ -34,6 +41,7 @@ class AppData with ChangeNotifier {
       int row = Random().nextInt(width) as int;
       board[row][columna] = "*";
     }
+
     gameIsOver = false;
     gameWinner = '-';
   }

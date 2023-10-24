@@ -17,12 +17,16 @@ class WidgetTresRatllaPainter extends CustomPainter {
 
     // Definim els punts on es creuaran les línies verticals
 
-    for (var i = 0; i < 9; i++) {
-      canvas.drawLine(Offset(i * size.width / 9, 0),
-          Offset(i * size.width / 9, size.height), paint);
+    for (var i = 0; i < int.parse(appData.taulell); i++) {
+      canvas.drawLine(
+          Offset(i * size.width / int.parse(appData.taulell), 0),
+          Offset(i * size.width / int.parse(appData.taulell), size.height),
+          paint);
 
-      canvas.drawLine(Offset(0, i * size.height / 9),
-          Offset(size.width, i * size.height / 9), paint);
+      canvas.drawLine(
+          Offset(0, i * size.height / int.parse(appData.taulell)),
+          Offset(size.width, i * size.height / int.parse(appData.taulell)),
+          paint);
     }
   }
 
@@ -91,22 +95,11 @@ class WidgetTresRatllaPainter extends CustomPainter {
     double cellWidth = size.width / 9;
     double cellHeight = size.height / 9;
 
-    for (int i = 0; i < 9; i++) {
-      for (int j = 0; j < 9; j++) {
+    for (int i = 0; i < int.parse(appData.taulell); i++) {
+      for (int j = 0; j < int.parse(appData.taulell); j++) {
         if (appData.board[i][j] == 'X') {
           // Dibuixar una X amb el color del jugador
           Color color = Colors.blue;
-          switch (appData.colorPlayer) {
-            case "Blau":
-              color = Colors.blue;
-              break;
-            case "Verd":
-              color = Colors.green;
-              break;
-            case "Gris":
-              color = Colors.grey;
-              break;
-          }
 
           double x0 = j * cellWidth;
           double y0 = i * cellHeight;
@@ -118,17 +111,6 @@ class WidgetTresRatllaPainter extends CustomPainter {
         } else if (appData.board[i][j] == 'O') {
           // Dibuixar una O amb el color de l'oponent
           Color color = Colors.blue;
-          switch (appData.colorOpponent) {
-            case "Vermell":
-              color = Colors.red;
-              break;
-            case "Taronja":
-              color = Colors.orange;
-              break;
-            case "Marró":
-              color = Colors.brown;
-              break;
-          }
 
           double x0 = j * cellWidth;
           double y0 = i * cellHeight;

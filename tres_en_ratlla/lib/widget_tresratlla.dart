@@ -52,12 +52,12 @@ class WidgetTresRatllaState extends State<WidgetTresRatlla> {
             } else {
               return GestureDetector(
                 onTapUp: (TapUpDetails details) {
-                  final int row =
-                      (details.localPosition.dy / (context.size!.height / 9))
-                          .floor();
-                  final int col =
-                      (details.localPosition.dx / (context.size!.width / 9))
-                          .floor();
+                  final int row = (details.localPosition.dy /
+                          (context.size!.height / int.parse(appData.taulell)))
+                      .floor();
+                  final int col = (details.localPosition.dx /
+                          (context.size!.width / int.parse(appData.taulell)))
+                      .floor();
 
                   appData.playMove(row, col);
                   setState(() {}); // Actualitza la vista
