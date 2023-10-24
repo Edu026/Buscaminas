@@ -51,14 +51,14 @@ class AppData with ChangeNotifier {
   
   // Fa una jugada, primer el jugador després la maquina
   void playMove(int row, int col) {
-    if (board[row][col] == '-') {
+    if (board[row][col] == 'M') {
       board[row][col] = 'X';
 
       board.forEach((n) {
         print(n);
       });
 
-      checkGameWinner();
+      checkGameWinner();  //Cambiar mensanje 
     }
   }
 
@@ -118,7 +118,7 @@ class AppData with ChangeNotifier {
     // Força simular un loading
     await Future.delayed(const Duration(milliseconds: 500));
 
-    Image tmpPlayer = Image.asset('assets/images/player.png');
+    Image tmpPlayer = Image.asset('assets/images/Mina.png'); // Imagen Mina
     Image tmpOpponent = Image.asset('assets/images/opponent.png');
 
     // Carrega les imatges
