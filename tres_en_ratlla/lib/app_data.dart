@@ -23,7 +23,7 @@ class AppData with ChangeNotifier {
   ui.Image? imagequa;
   ui.Image? imagecin;
   ui.Image? imagesis;
-
+  ui.Image? imageban;
   bool imagesReady = false;
 
   void resetGame(int minas, int width) {
@@ -89,6 +89,15 @@ class AppData with ChangeNotifier {
     }
   }
 
+  void flagCreation(row, col) {
+    if (board[row][col] == 'M') {
+      board[row][col] = 'F';
+    }
+    if (board[row][col] == 'F') {
+      board[row][col] = 'M';
+    }
+  }
+
   // Comprova si el joc ja té un tres en ratlla
   // No comprova la situació d'empat
   void checkGameWinner() {
@@ -147,6 +156,7 @@ class AppData with ChangeNotifier {
 
     Image tmpPlayer = Image.asset('assets/images/Mina.png'); // Imagen Mina
     Image tmpOpponent = Image.asset('assets/images/opponent.png');
+    Image bandera = Image.asset('assets/images/bandera.png');
     Image cero = Image.asset('assets/images/0.png');
     Image un = Image.asset('assets/images/1.png');
     Image dos = Image.asset('assets/images/2.png');
@@ -182,6 +192,9 @@ class AppData with ChangeNotifier {
     }
     if (context.mounted) {
       imagesis = await convertWidgetToUiImage(sis);
+    }
+    if (context.mounted) {
+      imageban = await convertWidgetToUiImage(bandera);
     }
 
     imagesReady = true;

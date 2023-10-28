@@ -108,6 +108,18 @@ class WidgetTresRatllaPainter extends CustomPainter {
 
           drawImage(canvas, appData.imagePlayer!, x0, y0, x1, y1);
           drawCross(canvas, x0, y0, x1, y1, color, 5.0);
+        }
+        if (appData.board[i][j] == 'F') {
+          // Dibuixar una X amb el color del jugador
+          Color color = Colors.blue;
+
+          double x0 = j * cellWidth;
+          double y0 = i * cellHeight;
+          double x1 = (j + 1) * cellWidth;
+          double y1 = (i + 1) * cellHeight;
+
+          drawImage(canvas, appData.imageban!, x0, y0, x1, y1);
+          drawCross(canvas, x0, y0, x1, y1, color, 5.0);
         } else if (appData.board[i][j].length == 2) {
           double x0 = j * cellWidth;
           double y0 = i * cellHeight;

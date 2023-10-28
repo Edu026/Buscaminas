@@ -37,7 +37,7 @@ class WidgetTresRatllaState extends State<WidgetTresRatlla> {
                 (context.size!.width / int.parse(appData.taulell)))
             .floor();
 
-        // appData.flagCreation(row, col);
+        appData.flagCreation(row, col);
         setState(() {}); // Actualitza la vista
       },
       onTapUp: (TapUpDetails details) {
