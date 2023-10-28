@@ -13,12 +13,23 @@ class AppData with ChangeNotifier {
   String gameWinner = '-';
   int minas = 5;
   int width = 9;
+  int cnt = 0;
   ui.Image? imagePlayer;
   ui.Image? imageOpponent;
+  ui.Image? imageun;
+  ui.Image? imagecer;
+  ui.Image? imagedos;
+  ui.Image? imagetres;
+  ui.Image? imagequa;
+  ui.Image? imagecin;
+  ui.Image? imagesis;
+
   bool imagesReady = false;
 
   void resetGame(int minas, int width) {
     board = [];
+    cnt = 0;
+
     for (int x = 0; x < width; x++) {
       List<String> row = [];
       for (int y = 0; y < width; y++) {
@@ -43,25 +54,40 @@ class AppData with ChangeNotifier {
         }
       }
     }
-    board.forEach((n) {
-        print(n);
-      });
   }
 
-  
   // Fa una jugada, primer el jugador després la maquina
   void playMove(int row, int col) {
     if (board[row][col] == 'M') {
       board[row][col] = 'X';
+      checkGameWinner(); //Cambiar mensanje
+    } else if (board[row][col] == '1') {
+      board[row][col] = '1+';
+      cnt++;
+    } else if (board[row][col] == '0') {
+      board[row][col] = '0+';
+      cnt++;
+    } else if (board[row][col] == '2') {
+      board[row][col] = '2+';
+      cnt++;
+    } else if (board[row][col] == '3') {
+      board[row][col] = '3+';
+      cnt++;
+    } else if (board[row][col] == '4') {
+      board[row][col] = '4+';
+      cnt++;
+    } else if (board[row][col] == '5') {
+      board[row][col] = '5+';
+      cnt++;
+    } else if (board[row][col] == '6') {
+      board[row][col] = '6+';
+      cnt++;
+    }
 
-      board.forEach((n) {
-        print(n);
-      });
-
-      checkGameWinner();  //Cambiar mensanje 
+    if (cnt == (width * width) - minas) {
+      checkGameWinner();
     }
   }
-
 
   // Comprova si el joc ja té un tres en ratlla
   // No comprova la situació d'empat
@@ -121,6 +147,13 @@ class AppData with ChangeNotifier {
 
     Image tmpPlayer = Image.asset('assets/images/Mina.png'); // Imagen Mina
     Image tmpOpponent = Image.asset('assets/images/opponent.png');
+    Image cero = Image.asset('assets/images/0.png');
+    Image un = Image.asset('assets/images/1.png');
+    Image dos = Image.asset('assets/images/2.png');
+    Image tres = Image.asset('assets/images/3.png');
+    Image quatre = Image.asset('assets/images/4.png');
+    Image cinc = Image.asset('assets/images/5.png');
+    Image sis = Image.asset('assets/images/6.png');
 
     // Carrega les imatges
     if (context.mounted) {
@@ -128,6 +161,27 @@ class AppData with ChangeNotifier {
     }
     if (context.mounted) {
       imageOpponent = await convertWidgetToUiImage(tmpOpponent);
+    }
+    if (context.mounted) {
+      imageun = await convertWidgetToUiImage(un);
+    }
+    if (context.mounted) {
+      imagecer = await convertWidgetToUiImage(cero);
+    }
+    if (context.mounted) {
+      imagedos = await convertWidgetToUiImage(dos);
+    }
+    if (context.mounted) {
+      imagetres = await convertWidgetToUiImage(tres);
+    }
+    if (context.mounted) {
+      imagequa = await convertWidgetToUiImage(quatre);
+    }
+    if (context.mounted) {
+      imagecin = await convertWidgetToUiImage(cinc);
+    }
+    if (context.mounted) {
+      imagesis = await convertWidgetToUiImage(sis);
     }
 
     imagesReady = true;
@@ -146,46 +200,46 @@ class AppData with ChangeNotifier {
         );
     return completer.future;
   }
+
   void exploreAndMark(int row, int col) {
-  // Verificar si estamos dentro de los límites del tablero
-  if (row < 0 || row >= width || col < 0 || col >= width) {
-    return;
-  }
-
-  // Verificar si ya hemos explorado esta casilla o si es una mina
-  if (board[row][col] != '-') {
-    return;
-  }
-
-  // Contar minas adyacentes
-  int minesAround = 0;
-
-  for (int dr = -1; dr <= 1; dr++) {
-    for (int dc = -1; dc <= 1; dc++) {
-      int newRow = row + dr;
-      int newCol = col + dc;
-
-      if (newRow >= 0 && newRow < width && newCol >= 0 && newCol < width) {
-        if (board[newRow][newCol] == 'M') {
-          minesAround++;
-        }
-      }
+    // Verificar si estamos dentro de los límites del tablero
+    if (row < 0 || row >= width || col < 0 || col >= width) {
+      return;
     }
-  }
 
-  // Marcar la casilla con el número de minas adyacentes
-  board[row][col] = minesAround.toString();
+    // Verificar si ya hemos explorado esta casilla o si es una mina
+    if (board[row][col] != '-') {
+      return;
+    }
 
-  // Si no hay minas adyacentes, explorar las casillas adyacentes
-  if (minesAround == 0) {
+    // Contar minas adyacentes
+    int minesAround = 0;
+
     for (int dr = -1; dr <= 1; dr++) {
       for (int dc = -1; dc <= 1; dc++) {
         int newRow = row + dr;
         int newCol = col + dc;
-        exploreAndMark(newRow, newCol);
+
+        if (newRow >= 0 && newRow < width && newCol >= 0 && newCol < width) {
+          if (board[newRow][newCol] == 'M') {
+            minesAround++;
+          }
+        }
+      }
+    }
+
+    // Marcar la casilla con el número de minas adyacentes
+    board[row][col] = minesAround.toString();
+
+    // Si no hay minas adyacentes, explorar las casillas adyacentes
+    if (minesAround == 0) {
+      for (int dr = -1; dr <= 1; dr++) {
+        for (int dc = -1; dc <= 1; dc++) {
+          int newRow = row + dr;
+          int newCol = col + dc;
+          exploreAndMark(newRow, newCol);
+        }
       }
     }
   }
-}
-
 }

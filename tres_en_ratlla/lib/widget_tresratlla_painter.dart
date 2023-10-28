@@ -108,6 +108,54 @@ class WidgetTresRatllaPainter extends CustomPainter {
 
           drawImage(canvas, appData.imagePlayer!, x0, y0, x1, y1);
           drawCross(canvas, x0, y0, x1, y1, color, 5.0);
+        } else if (appData.board[i][j].length == 2) {
+          double x0 = j * cellWidth;
+          double y0 = i * cellHeight;
+          double x1 = (j + 1) * cellWidth;
+          double y1 = (i + 1) * cellHeight;
+          switch (appData.board[i][j]) {
+            case "1+":
+              {
+                drawImage(canvas, appData.imageun!, x0, y0, x1, y1);
+              }
+              break;
+
+            case "0+":
+              {
+                drawImage(canvas, appData.imagecer!, x0, y0, x1, y1);
+              }
+              break;
+            case "2+":
+              {
+                drawImage(canvas, appData.imagedos!, x0, y0, x1, y1);
+              }
+              break;
+            case "3+":
+              {
+                drawImage(canvas, appData.imagetres!, x0, y0, x1, y1);
+              }
+              break;
+            case "4+":
+              {
+                drawImage(canvas, appData.imagequa!, x0, y0, x1, y1);
+              }
+              break;
+            case "5+":
+              {
+                drawImage(canvas, appData.imagecin!, x0, y0, x1, y1);
+              }
+              break;
+            case "6+":
+              {
+                drawImage(canvas, appData.imagesis!, x0, y0, x1, y1);
+              }
+              break;
+            default:
+              {
+                //statements;
+              }
+              break;
+          }
         } else if (appData.board[i][j] == 'O') {
           // Dibuixar una O amb el color de l'oponent
           Color color = Colors.blue;
