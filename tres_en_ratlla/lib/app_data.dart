@@ -10,13 +10,12 @@ class AppData with ChangeNotifier {
   List<List<String>> board = [];
   //Mapa para almacenar la posición de las banderas
   List<List<String>> flagMap = [];
-
   bool gameIsOver = false;
   String gameWinner = '-';
   int minas = 5;
   int width = 9;
   int cnt = 0;
-  ui.Image? imagePlayer;
+  ui.Image? imageMina;
   ui.Image? imageOpponent;
   ui.Image? imageun;
   ui.Image? imagecer;
@@ -27,6 +26,15 @@ class AppData with ChangeNotifier {
   ui.Image? imagesis;
   ui.Image? imageban;
   bool imagesReady = false;
+  int elapsedTimeInSeconds = 0;
+
+  Stream<int> get elapsedTimeStream => _elapsedTimeStreamController.stream;
+  final _elapsedTimeStreamController = StreamController<int>.broadcast();
+
+  void incrementElapsedTime() {
+    elapsedTimeInSeconds++;
+    _elapsedTimeStreamController.sink.add(elapsedTimeInSeconds);
+  }
 
   void resetGame(int minas, int width) {
     board = [];
@@ -112,46 +120,14 @@ class AppData with ChangeNotifier {
   // Comprova si el joc ja té un tres en ratlla
   // No comprova la situació d'empat
   void checkGameWinner() {
-    for (int i = 0; i < 9; i++) {
-      // Comprovar files
-      if (board[i][0] == board[i][1] &&
-          board[i][1] == board[i][2] &&
-          board[i][0] != '-') {
-        gameIsOver = true;
-        gameWinner = board[i][0];
-        return;
-      }
-
-      // Comprovar columnes
-      if (board[0][i] == board[1][i] &&
-          board[1][i] == board[2][i] &&
-          board[0][i] != '-') {
-        gameIsOver = true;
-        gameWinner = board[0][i];
-        return;
+    gameWinner = "P";
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < width; y++) {
+        if (board[x][y].compareTo("X") == 0) {
+          gameWinner = 'M';
+        }
       }
     }
-
-    // Comprovar diagonal principal
-    if (board[0][0] == board[1][1] &&
-        board[1][1] == board[2][2] &&
-        board[0][0] != '-') {
-      gameIsOver = true;
-      gameWinner = board[0][0];
-      return;
-    }
-
-    // Comprovar diagonal secundària
-    if (board[0][2] == board[1][1] &&
-        board[1][1] == board[2][0] &&
-        board[0][2] != '-') {
-      gameIsOver = true;
-      gameWinner = board[0][2];
-      return;
-    }
-
-    // No hi ha guanyador, torna '-'
-    gameWinner = '-';
   }
 
   // Carrega les imatges per dibuixar-les al Canvas
@@ -178,7 +154,7 @@ class AppData with ChangeNotifier {
 
     // Carrega les imatges
     if (context.mounted) {
-      imagePlayer = await convertWidgetToUiImage(tmpPlayer);
+      imageMina = await convertWidgetToUiImage(tmpPlayer);
     }
     if (context.mounted) {
       imageOpponent = await convertWidgetToUiImage(tmpOpponent);

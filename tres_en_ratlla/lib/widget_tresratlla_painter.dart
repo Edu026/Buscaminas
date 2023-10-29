@@ -79,17 +79,7 @@ class WidgetTresRatllaPainter extends CustomPainter {
     );
   }
 
-  // Dibuixa un cercle centrat a una casella del taulell
-  void drawCircle(Canvas canvas, double x, double y, double radius, Color color,
-      double strokeWidth) {
-    final paint = Paint()
-      ..style = PaintingStyle.stroke
-      ..color = color
-      ..strokeWidth = strokeWidth;
-    canvas.drawCircle(Offset(x, y), radius, paint);
-  }
-
-  // Dibuixa el taulell de joc (creus i rodones)
+  // Dibuixa el taulell
   void drawBoardStatus(Canvas canvas, Size size) {
     // Dibuixar 'X' i 'O' del tauler
     double cellWidth = size.width / int.parse(appData.taulell);
@@ -98,16 +88,12 @@ class WidgetTresRatllaPainter extends CustomPainter {
     for (int i = 0; i < int.parse(appData.taulell); i++) {
       for (int j = 0; j < int.parse(appData.taulell); j++) {
         if (appData.board[i][j] == 'X') {
-          // Dibuixar una X amb el color del jugador
-          Color color = Colors.blue;
-
           double x0 = j * cellWidth;
           double y0 = i * cellHeight;
           double x1 = (j + 1) * cellWidth;
           double y1 = (i + 1) * cellHeight;
 
-          drawImage(canvas, appData.imagePlayer!, x0, y0, x1, y1);
-          drawCross(canvas, x0, y0, x1, y1, color, 5.0);
+          drawImage(canvas, appData.imageMina!, x0, y0, x1, y1);
         }
         if (appData.flagMap[i][j].contains("F")) {
           //Busca la badera en flagMap
@@ -168,20 +154,6 @@ class WidgetTresRatllaPainter extends CustomPainter {
               }
               break;
           }
-        } else if (appData.board[i][j] == 'O') {
-          // Dibuixar una O amb el color de l'oponent
-          Color color = Colors.blue;
-
-          double x0 = j * cellWidth;
-          double y0 = i * cellHeight;
-          double x1 = (j + 1) * cellWidth;
-          double y1 = (i + 1) * cellHeight;
-          double cX = x0 + (x1 - x0) / 2;
-          double cY = y0 + (y1 - y0) / 2;
-          double radius = (min(cellWidth, cellHeight) / 2) - 5;
-
-          drawImage(canvas, appData.imageOpponent!, x0, y0, x1, y1);
-          drawCircle(canvas, cX, cY, radius, color, 5.0);
         }
       }
     }
@@ -189,7 +161,10 @@ class WidgetTresRatllaPainter extends CustomPainter {
 
   // Dibuixa el missatge de joc acabat
   void drawGameOver(Canvas canvas, Size size) {
-    String message = "El joc ha acabat. Ha guanyat ${appData.gameWinner}!";
+    String message = "El joc ha acabat. Has guanyat!";
+    if (appData.gameWinner.compareTo('M') == 0) {
+      message = "El joc ha acabat. Has perdut";
+    }
 
     const textStyle = TextStyle(
       color: Colors.black,
@@ -230,6 +205,7 @@ class WidgetTresRatllaPainter extends CustomPainter {
     drawBoardLines(canvas, size);
     drawBoardStatus(canvas, size);
     if (appData.gameWinner != '-') {
+      //Final
       drawGameOver(canvas, size);
     }
   }

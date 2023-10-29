@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:provider/provider.dart';
@@ -13,11 +15,13 @@ class WidgetTresRatlla extends StatefulWidget {
 
 class WidgetTresRatllaState extends State<WidgetTresRatlla> {
   Future<void>? _loadImagesFuture;
+  Timer? gameTimer;
 
   // Al iniciar el widget, carrega les imatges
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       AppData appData = Provider.of<AppData>(context, listen: false);
       _loadImagesFuture = appData.loadImages(context);
