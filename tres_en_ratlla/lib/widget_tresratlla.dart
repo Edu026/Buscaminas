@@ -36,8 +36,7 @@ class WidgetTresRatllaState extends State<WidgetTresRatlla> {
         final int col = (details.localPosition.dx /
                 (context.size!.width / int.parse(appData.taulell)))
             .floor();
-
-        appData.flagCreation(row, col);
+        appData.flagCreation(row, col); //Flag
         setState(() {}); // Actualitza la vista
       },
       onTapUp: (TapUpDetails details) {
@@ -47,7 +46,6 @@ class WidgetTresRatllaState extends State<WidgetTresRatlla> {
         final int col = (details.localPosition.dx /
                 (context.size!.width / int.parse(appData.taulell)))
             .floor();
-
         appData.playMove(row, col);
         setState(() {}); // Actualitza la vista
       },

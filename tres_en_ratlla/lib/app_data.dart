@@ -8,6 +8,8 @@ class AppData with ChangeNotifier {
   String taulell = "9";
   String mines = "5";
   List<List<String>> board = [];
+  //Mapa para almacenar la posición de las banderas
+  List<List<String>> flagMap = [];
 
   bool gameIsOver = false;
   String gameWinner = '-';
@@ -28,6 +30,7 @@ class AppData with ChangeNotifier {
 
   void resetGame(int minas, int width) {
     board = [];
+    flagMap = [];
     cnt = 0;
 
     for (int x = 0; x < width; x++) {
@@ -36,6 +39,10 @@ class AppData with ChangeNotifier {
         row.add('-');
       }
       board.add(row);
+    }
+
+    for (int i = 0; i < width; i++) {
+      flagMap.add(List<String>.from(board[i]));
     }
 
     for (int cnt = 0; cnt < minas; cnt++) {
@@ -90,11 +97,15 @@ class AppData with ChangeNotifier {
   }
 
   void flagCreation(row, col) {
-    if (board[row][col] == 'M') {
-      board[row][col] = 'F';
+    if (flagMap[row][col].contains("F")) {
+      flagMap[row][col] = '-';
+    } else
+      flagMap[row][col] = 'F';
+    for (var element in flagMap) {
+      print(element);
     }
-    if (board[row][col] == 'F') {
-      board[row][col] = 'M';
+    for (var element in board) {
+      print(element);
     }
   }
 
