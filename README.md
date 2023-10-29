@@ -1,4 +1,6 @@
-# Flutter, Tres en ratlla
+# Alex Pozas, Eduardo Amorós 
+
+# Flutter, Buscaminas
 
 Aquest projecte és un exemple de CustomPainter en Flutter
 
